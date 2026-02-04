@@ -1,0 +1,104 @@
+<div class="auth-container">
+  <div class="auth-card">
+    <!-- Header -->
+    <div class="auth-header">
+      <svg class="auth-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+              d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path>
+      </svg>
+      <h2 class="auth-title">Create your account</h2>
+      <p class="auth-subtitle">Join AI Code Review today</p>
+    </div>
+
+    <!-- Register Form -->
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+      <!-- Error Message -->
+      <div *ngIf="errorMessage" class="alert-error">
+        <svg class="error-icon" fill="currentColor" viewBox="0 0 20 20">
+          <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/>
+        </svg>
+        <span>{{ errorMessage }}</span>
+      </div>
+
+      <!-- Full Name -->
+      <div class="form-group">
+        <label for="fullName" class="form-label">Full Name</label>
+        <input 
+          id="fullName" 
+          type="text" 
+          formControlName="fullName"
+          class="form-input"
+          placeholder="John Doe">
+        <p *ngIf="fullName?.invalid && fullName?.touched" class="form-error">
+          <span *ngIf="fullName?.errors?.['required']">Full name is required</span>
+          <span *ngIf="fullName?.errors?.['minlength']">Must be at least 2 characters</span>
+        </p>
+      </div>
+
+      <!-- Username -->
+      <div class="form-group">
+        <label for="username" class="form-label">Username</label>
+        <input 
+          id="username" 
+          type="text" 
+          formControlName="username"
+          class="form-input"
+          placeholder="johndoe">
+        <p *ngIf="username?.invalid && username?.touched" class="form-error">
+          <span *ngIf="username?.errors?.['required']">Username is required</span>
+          <span *ngIf="username?.errors?.['minlength']">Must be at least 3 characters</span>
+        </p>
+      </div>
+
+      <!-- Email -->
+      <div class="form-group">
+        <label for="email" class="form-label">Email</label>
+        <input 
+          id="email" 
+          type="email" 
+          formControlName="email"
+          class="form-input"
+          placeholder="john@example.com">
+        <p *ngIf="email?.invalid && email?.touched" class="form-error">
+          <span *ngIf="email?.errors?.['required']">Email is required</span>
+          <span *ngIf="email?.errors?.['email']">Please enter a valid email</span>
+        </p>
+      </div>
+
+      <!-- Password -->
+      <div class="form-group">
+        <label for="password" class="form-label">Password</label>
+        <input 
+          id="password" 
+          type="password" 
+          formControlName="password"
+          class="form-input"
+          placeholder="Minimum 8 characters">
+        <p *ngIf="password?.invalid && password?.touched" class="form-error">
+          <span *ngIf="password?.errors?.['required']">Password is required</span>
+          <span *ngIf="password?.errors?.['minlength']">Must be at least 8 characters</span>
+        </p>
+      </div>
+
+      <!-- Submit Button -->
+      <button 
+        type="submit" 
+        [disabled]="isLoading"
+        class="btn btn-primary btn-full">
+        <span *ngIf="!isLoading">Create account</span>
+        <span *ngIf="isLoading" class="loading-text">
+          <span class="spinner"></span>
+          Creating account...
+        </span>
+      </button>
+
+      <!-- Login Link -->
+      <div class="auth-footer">
+        <p>
+          Already have an account? 
+          <a routerLink="/login" class="auth-link">Sign in</a>
+        </p>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,83 @@
+<nav>
+  <div class="nav-container">
+    <!-- Logo -->
+    <a routerLink="/dashboard" class="nav-brand">
+      <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+              d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path>
+      </svg>
+      <span class="nav-title">AI Code Review</span>
+    </a>
+
+    <!-- Desktop Navigation -->
+    <div class="nav-links" *ngIf="authService.isAuthenticated()">
+      <a routerLink="/dashboard" routerLinkActive="active" class="nav-link">
+        Dashboard
+      </a>
+      <a routerLink="/review/new" routerLinkActive="active" class="nav-link">
+        New Review
+      </a>
+      <a routerLink="/review/list" routerLinkActive="active" class="nav-link">
+        History
+      </a>
+
+      <!-- User Menu -->
+      <div class="user-menu">
+        <button (click)="toggleMenu()" class="user-button">
+          <svg class="user-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                  d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+          </svg>
+          <span>{{ currentUser?.username }}</span>
+          <svg class="dropdown-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+          </svg>
+        </button>
+
+        <!-- Dropdown -->
+        <div *ngIf="isMenuOpen" class="user-dropdown">
+          <button (click)="navigateTo('/profile')" class="dropdown-item">
+            Profile
+          </button>
+          <button (click)="logout()" class="dropdown-item danger">
+            Logout
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Login/Register (when not authenticated) -->
+    <div class="nav-links" *ngIf="!authService.isAuthenticated()">
+      <a routerLink="/login" class="nav-link">Login</a>
+      <a routerLink="/register" class="btn btn-primary">Sign Up</a>
+    </div>
+
+    <!-- Mobile menu button -->
+    <button (click)="toggleMenu()" class="mobile-toggle" *ngIf="authService.isAuthenticated()">
+      <svg class="mobile-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+      </svg>
+    </button>
+  </div>
+
+  <!-- Mobile Menu -->
+  <div *ngIf="isMenuOpen" class="mobile-menu">
+    <div class="mobile-links" *ngIf="authService.isAuthenticated()">
+      <a routerLink="/dashboard" (click)="toggleMenu()" routerLinkActive="active" class="mobile-link">
+        Dashboard
+      </a>
+      <a routerLink="/review/new" (click)="toggleMenu()" routerLinkActive="active" class="mobile-link">
+        New Review
+      </a>
+      <a routerLink="/review/list" (click)="toggleMenu()" routerLinkActive="active" class="mobile-link">
+        History
+      </a>
+      <a routerLink="/profile" (click)="toggleMenu()" routerLinkActive="active" class="mobile-link">
+        Profile
+      </a>
+      <button (click)="logout()" class="mobile-link danger">
+        Logout
+      </button>
+    </div>
+  </div>
+</nav>
